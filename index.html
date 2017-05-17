@@ -17,7 +17,9 @@
 			height: 100%;
 			min-height:100%;
 		}
-
+		a{
+			color: white;
+		}
         body{
 			height: 2000px;
 			background-color: black;
@@ -47,16 +49,62 @@
 			font-family: roboto;
 			font-size: 32pt;
 		}
+		#content{
+		
+		}
+		.picture{
+			padding: 50px;
+			display: table;
+		}
+		.caption{
+			padding: 25px;
+			font-family: roboto;
+			font-size: 14pt;
+			display: table-cell;
+			vertical-align: middle;
+		}
+		.links{
+			font-family: roboto;
+			text-align: center;
+			font-size: 12pt;
+			color: gray;
+			z-index: 2;
+			position:absolute;
+			width: 100%;
+			min-width: 800px;
+		}
+		.captionTitle{
+			font-family: roboto;
+			font-style: italic;
+			font-size: 24pt;
+		}
 	</style>
 </head>
 
 <body>
 	<div id="header">
 		<canvas id="graph"></canvas>
+		<div class="links"><a href="https://github.com/etharooni">github</a> | <a href="https://www.linkedin.com/in/ethan-russell-3a2101129/">linkedin</a> | <a href="mailto:ethan@ethan-russell.com">email</a></div>
 	</div>
 	<div id="text">
-		<div id="profile"><img src="profilesmall.png">
-			<div id="ethan">About me</div>
+		<div id="content">
+			<div id="profile"><img src="profilesmall.png">
+				<span id="ethan">stuff I've made</span>
+			</div>
+			<div style="height: 125px"></div>
+			<div class="picture"><img src="hammerkartsmall.jpg"><span class="caption"><span class="captionTitle">Hammerkart</span><br>The Hammerkart is a 640lb, nearly 200hp go kart.  The engine was liberated from a junkyard and once lived in a front-wheel drive Infiniti G20.  This SR20 powered deathsled is unencumbered by bourgeois luxuries like suspension or floor panels, and never fails to make you grin ear to ear.  The EFI system is currently based on a Megasquirt 1, but a fully custom ECU is underway.</span></div>
+			<div class="picture"><img src="3phsmall.jpg"><span class="caption"><span class="captionTitle">Field-Oriented Brushless Servo Controller</span><br>Started as a Computer Science capstone project for my senior year at UPS, this controller drives off-the-shelf sensored hobby brushless motors as industrial servos to regulate torque, RPM, and position with stepper motor style input.  A new version is currently being designed that can drive three servos with a single on-board STM32F4 processor. </span></span></div>
+			<div class="picture"><img src="nitrogengensmall.jpg"><span class="caption"><span class="captionTitle">Nitrogen Generator</span><br>Built for the UPS chem department to replace continuous replacement of nitrogen dewars to drive analytical equipment.  This system uses computer controlled pressure-swing-absorbsion to filter the Oxygen from compressed air and is currently delivering 24/7 nitrogen to multiple labs around campus.</span></span></div>
+			<div class="picture"><img src="stringwindersmall.jpg"><span class="caption"><span class="captionTitle">String Winder</span><br>Built for a UPS physics faculty member for research on non-uniform guitar strings.  This guitar string lathe winds guitar strings with a user-specified mass density.  It can also calculate the pitch of the wound guitar string with a record player needle, and accurately measure the real mass-density.</span></span></div>
+			<div class="picture"><img src="cncsmall.jpg"><span class="caption"><span class="captionTitle">CNC Plasma Cutter</span><br>This custom CNC plasma cutter uses an everlast torch and is powered by LinuxCNC.</span></span></div>
+			<div class="picture"><img src="cardspoofersmall.jpg"><span class="caption"><span class="captionTitle">Card Emulator</span><br>Students around UPS want to let fellow students into their dorm building for group projects or to hang out in a lounge.  Currently, a student has to physically give a peer their student ID card to let anyone in.  This problem is solved by the card emulator.  A student simply has to share their student ID number, and this device will pulse an electromagnetic sequence to let a student into a dorm building.</span></span></div>
+			<div class="picture"><img src="fishsmall.jpg"><span class="caption"><span class="captionTitle">Sculpture: Fish</span><br>I have a series of steel scrap sculptures built over the course of the last few years.  This one is one of my favorites, and currently lives in a padio in Massachusetts.</span></span></div>
+			<div class="picture"><img src="dinosmall.jpg"><span class="caption"><span class="captionTitle">Sculpture: Dino</span><br>The dino was built to clear out my ever increasing scrap pile in my garage.  If you live in Tacoma, maybe you've seen it - drop by sometime and ask me to make it shoot fire for you.</span></span></div>
+			<div class="picture"><img src="walkingsmall.jpg"><span class="caption"><span class="captionTitle">Theo Jansen Walking Machine</span><br>This 12-legged walking machine was built after my senior year in high school and is powered by a 6hp cement mixer engine.</span></span></div>
+			<div class="picture"><img src="trailersmall.jpg"><span class="caption"><span class="captionTitle">Drop Trailer</span><br>Tilt trailers are a)difficult to load awkward loads, b)absurdly heavy, and c)absurdly expensive.  This was designed and built out of necessity to heavy awkward loads out of my house.</span></span></div>
+			<div class="picture"><img src="teslaeggsmall.jpg"><span class="caption"><span class="captionTitle">Tesla Egg</span><br>The Tesla egg was one of Nikola Tesla's original demonstrations of A/C electricity.  This was built as a display for the UPS science building.  The solid aluminum egg spins on end when electric currents are induced throughout it.</span></span></div>
+			<div class="picture"><img src="intervalometersmall.jpg"><span class="caption"><span class="captionTitle">Intervalometer</span><br>Powered by an Atmel AVR, this camera controller is designed to trigger Canon DSLRs through a 2.5mm stereo cable, or Nikon DSLRs with an infrared remote.  It is perfect for long-exposure or time-lapse photography.</span></span></div>
+			<div class="picture"><img src="battlebotsmall.jpg"><span class="caption"><span class="captionTitle">Twist-O-Crunch</span><br>In my sophomore year in high school, a friend and I raised money on Kickstarter to build this 120lb battlebot for the 2011 Robogames.</span></span></div>
 		</div>
 	</div>
 

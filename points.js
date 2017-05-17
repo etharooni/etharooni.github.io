@@ -12,10 +12,8 @@ function initHeader() {
 	headerOffset = profile.offsetTop;
 	profile.style.position = "absolute";
 	
-	
 	resize();
 	parallax();
-	shift = shift = -(probHeight*scaleFactor/2);
 	addListeners();
 	sample();
 	initAnimation();
@@ -74,7 +72,7 @@ function makeDots(){
 		var xPos = points[i].x;
 		var yPos = points[i].y;
 		var canvasX = xPos*scaleFactor+((width/2)-(probWidth*scaleFactor/2));
-		var canvasY = yPos*scaleFactor+(height/2)+shift;
+		var canvasY = yPos*scaleFactor+(height/2)-(probHeight*scaleFactor/2);;
 		var opacity = getProb(xPos,yPos)/256.0;
 		ctx.beginPath();
 		ctx.arc(canvasX,canvasY,arcSize,0,2*Math.PI);
@@ -103,8 +101,7 @@ function resize() {
 
 function parallax(){
 	scrolltop = window.pageYOffset; 
-	shift = -(probHeight*scaleFactor/2)-scrolltop;
-	if(-shift > (width/4)){
+	if(scrolltop > (height/2)){
 		animating = false;
 	}else if(!animating){
 		animating = true;
