@@ -74,10 +74,12 @@ function makeDots(){
 		var canvasX = xPos*scaleFactor+((width/2)-(probWidth*scaleFactor/2));
 		var canvasY = yPos*scaleFactor+(height/2)-(probHeight*scaleFactor/2);;
 		var opacity = getProb(xPos,yPos)/256.0;
-		ctx.beginPath();
-		ctx.arc(canvasX,canvasY,arcSize,0,2*Math.PI);
-		ctx.strokeStyle = 'rgba(255,255,255,' + opacity + ')';
-		ctx.stroke();
+		if(opacity > 0.01){
+			ctx.beginPath();
+			ctx.arc(canvasX,canvasY,arcSize,0,2*Math.PI);
+			ctx.strokeStyle = 'rgba(255,255,255,' + opacity + ')';
+			ctx.stroke();
+		}
 	}
 }
 
