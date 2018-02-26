@@ -50,8 +50,8 @@ function Bacteria(initPosition=[0,0]){
 		var mouseDistance = Math.sqrt(distanceFromMouseX*distanceFromMouseX + distanceFromMouseY*distanceFromMouseY);
 		var maxDistance = 10*scaleFactor;
 		if(mouseDistance < maxDistance){
-			this.velocity[0] = (distanceFromMouseX_real)*0.005;
-			this.velocity[1] = (distanceFromMouseY_real)*0.005;
+			this.velocity[0] = (distanceFromMouseX_real)*0.001;
+			this.velocity[1] = (distanceFromMouseY_real)*0.001;
 			this.mouseTime++;
 		}else{
 			this.mouseTime = 0;
