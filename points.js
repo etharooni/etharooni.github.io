@@ -5,7 +5,7 @@ animating = true;
 initHeader();
 
 function initHeader() {
-	canvas = document.getElementById('graph');
+	canvas = document.getElementById('bubbly');
 	ctx = canvas.getContext('2d');
 	
 	profile = document.getElementById('profile');
@@ -74,6 +74,7 @@ function makeDots(){
 		var canvasX = xPos*scaleFactor+((width/2)-(probWidth*scaleFactor/2));
 		var canvasY = yPos*scaleFactor+(height/2)-(probHeight*scaleFactor/2);;
 		var opacity = getProb(xPos,yPos)/256.0;
+		//var radius = arcSize/2.0+Math.random()*8.0;
 		if(opacity > 0.01){
 			ctx.beginPath();
 			ctx.arc(canvasX,canvasY,arcSize,0,2*Math.PI);
