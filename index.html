@@ -2,7 +2,7 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=0.75, maximum-scale=0.75">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.75, minimum-scale=0.5">
 
 	<title>Ethan Russell</title>
 	
@@ -11,9 +11,9 @@
 		html, body{
 			margin: 0;
 			padding: 0;
-			width: 100%;
 			height: 100%;
 			min-height:100%;
+			min-width: 800px;
 		}
 		a{
 			color: white;
@@ -44,7 +44,8 @@
 			vertical-align: middle;
 			padding: 50px;
 			font-family: roboto;
-			font-size: 32pt;
+			font-size: 2.56em;
+			width: 100%;
 		}
 		#content{
 		
@@ -56,24 +57,25 @@
 		.caption{
 			padding: 25px;
 			font-family: roboto;
-			font-size: 14pt;
+			font-size: 1.12em;
 			display: table-cell;
 			vertical-align: middle;
+			max-width: 1080px;
 		}
 		.links{
 			font-family: roboto;
 			text-align: center;
-			font-size: 12pt;
+			font-size: 0.96em;
 			color: gray;
 			z-index: 2;
 			position:absolute;
-			width: 100%;
+			width:100%;
 			min-width: 800px;
 		}
 		.captionTitle{
 			font-family: roboto;
 			font-style: italic;
-			font-size: 24pt;
+			font-size: 1.92em;
 		}
 		
 		#backgroundboobles{
@@ -89,6 +91,7 @@
 </head>
 
 <body>
+	<canvas id="backgroundboobles"></canvas>
 	<div id="header">
 		<canvas id="bubbly"></canvas>
 		<div class="links"><a href="https://github.com/etharooni">github</a> | <a href="https://www.linkedin.com/in/ethan-russell-3a2101129/">linkedin</a> | <a href="mailto:ethan@ethan-russell.com">email</a></div>
@@ -116,7 +119,6 @@
 			<div class="picture"><img src="battlebotsmall.jpg"><span class="caption"><span class="captionTitle">Twist-O-Crunch</span><br>In my sophomore year in high school, a friend and I raised money on Kickstarter to build this 120lb battlebot for the 2011 Robogames.</span></span></div>
 		</div>
 	</div>
-	<canvas id="backgroundboobles"></canvas>
 	<script type="text/javascript" src="points.js"></script>
 	<script type="text/javascript" src="particles.js"></script>
 </body>

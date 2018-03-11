@@ -126,7 +126,7 @@ function resize() {
 	height = header.clientHeight;
 	canvas.width = width;
 	canvas.height = height;
-	scaleFactor = Math.min(Math.max((width *10.0 / 1600.0), 1), 8);
+	scaleFactor = Math.min(Math.max((width *10.0 / 1600.0), 4), 8);
 	arcSize = scaleFactor*0.5;
 	scrollFactor = 0;
 }
