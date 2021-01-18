@@ -17,7 +17,7 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 	this.trajectory = initTraj;
 	this.grid = initGrid;
 	this.length = 0;
-	this.affectedPoints = [];
+	//this.affectedPoints = [];
 
 	this.doTrajectoryIfValid = function(tryTrajectory) {
 		var newx = -1;
@@ -57,13 +57,13 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 				break;
 		}
 		if(this.grid.isValid(newx,newy)){
-			this.drawSegment(this.x,this.y, newx, newy);
+			this.drawSegment(this.x,this.y,newx,newy);
 			this.x = newx;
 			this.y = newy;
 			this.trajectory = tryTrajectory;
 			this.grid.setPixel(newx, newy, 0);
 			this.length += 1;
-			this.affectedPoints.push([newx, newy]);
+			//this.affectedPoints.push([newx, newy]);
 			return 1;
 		}else{
 			return 0;
@@ -147,10 +147,26 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 	this.drawSegment = function(x1, y1, x2, y2) {
 		var cvs1 = this.grid.toCanvas(x1,y1);
 		var cvs2 = this.grid.toCanvas(x2,y2);
+		ctx.strokeStyle = '#00DCDC';
 		ctx.beginPath();
 		ctx.moveTo(cvs1[0], cvs1[1]);
 		ctx.lineTo(cvs2[0], cvs2[1]);
 		ctx.stroke();
+	}
+	this.drawVias = function(){
+		if(this.length < 1){
+			return;
+		}
+		var cvsxy = this.grid.toCanvas(this.x,this.y);
+		ctx.beginPath();
+		ctx.strokeStyle = '#00DCDC';
+		ctx.arc(cvsxy[0],cvsxy[1], 2, 0, 2 * Math.PI);
+		ctx.stroke();
+		
+		cvsxy = this.grid.toCanvas(this.startx,this.starty);
+		ctx.beginPath();
+		ctx.arc(cvsxy[0],cvsxy[1], 2, 0, 2 * Math.PI);
+		ctx.stroke();	
 	}
 };
 
@@ -214,19 +230,25 @@ function Visualizer(initGrid ={}){
 			var y = Math.floor(Math.random()*grid.height);
 			var traj = Math.floor(Math.random()*7);
 			if(this.grid.isValid(x,y)){
-				this.traces.push(new Trace(x, y, traj, grid));
-				return;
+				var newtrace = new Trace(x, y, traj, grid);
+				this.traces.push(newtrace);
+				return newtrace;
 			}
 		}
 	}
 	this.generateTraces = function(){
-		for(let i=0; i<2000;i++){
-			this.createRandomTrace();
+		for(let i=0; i<800;i++){
+			var newtrace = this.createRandomTrace();
+			this.grid.setPixel(newtrace.x, newtrace.y, 0);
+			newtrace.drawVias();
 		}
 		for(let i=0; i<10; i++){
 			for (var trace of this.traces){
 				trace.doNext();
 			}
+		}
+		for (var trace of this.traces){
+			trace.drawVias();
 		}
 	}
 }
