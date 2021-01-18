@@ -20,9 +20,27 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 	//this.affectedPoints = [];
 
 	this.doTrajectoryIfValid = function(tryTrajectory) {
+		var newcoord = this.executeTrajectory(this.x, this.y, tryTrajectory);
+		var newx = newcoord[0];
+		var newy = newcoord[1];
+		if(this.isValid(newx,newy,tryTrajectory)){
+			this.drawSegment(this.x,this.y,newx,newy);
+			this.x = newx;
+			this.y = newy;
+			this.trajectory = tryTrajectory;
+			this.grid.setPixel(newx, newy, 0);
+			this.length += 1;
+			//this.affectedPoints.push([newx, newy]);
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+	
+	this.executeTrajectory = function(x, y, trajectory){
 		var newx = -1;
 		var newy = -1;
-		switch (tryTrajectory){
+		switch (trajectory){
 			case Traj.N:
 				newy = this.y-1;
 				newx = this.x;
@@ -56,18 +74,7 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 				newx = this.x-1;
 				break;
 		}
-		if(this.grid.isValid(newx,newy)){
-			this.drawSegment(this.x,this.y,newx,newy);
-			this.x = newx;
-			this.y = newy;
-			this.trajectory = tryTrajectory;
-			this.grid.setPixel(newx, newy, 0);
-			this.length += 1;
-			//this.affectedPoints.push([newx, newy]);
-			return 1;
-		}else{
-			return 0;
-		}
+		return [newx,newy]
 	}
 
 	this.doNext = function() {
@@ -144,6 +151,49 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 			return 0; //end here.  Nothing left to do.
 		}
 	}
+	this.isValid = function(x,y,trajectory){
+		if(this.grid.lutLookup(x,y) == false){
+			return false;
+		}
+		//if(trajectory == Traj.NE){
+		//	var coords = this.executeTrajectory(this.x, this.y, Traj.N);
+		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
+		//		return false;
+		//	}
+		//	var coords = this.executeTrajectory(this.x, this.y, Traj.E);
+		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
+		//		return false;
+		//	}
+		//}else if(trajectory == Traj.NW){
+		//	var coords = this.executeTrajectory(this.x, this.y, Traj.N);
+		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
+		//		return false;
+		//	}
+		//	var coords = this.executeTrajectory(this.x, this.y, Traj.W);
+		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
+		//		return false;
+		//	}
+		//}else if(trajectory == Traj.SE){
+		//	var coords = this.executeTrajectory(this.x, this.y, Traj.S);
+		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
+		//		return false;
+		//	}
+		//	var coords = this.executeTrajectory(this.x, this.y, Traj.E);
+		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
+		//		return false;
+		//	}
+		//}else if(trajectory == Traj.SW){
+		//	var coords = this.executeTrajectory(this.x, this.y, Traj.S);
+		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
+		//		return false;
+		//	}
+		//	var coords = this.executeTrajectory(this.x, this.y, Traj.W);
+		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
+		//		return false;
+		//	}
+		//}
+		return true;
+	}
 	this.drawSegment = function(x1, y1, x2, y2) {
 		var cvs1 = this.grid.toCanvas(x1,y1);
 		var cvs2 = this.grid.toCanvas(x2,y2);
@@ -181,7 +231,7 @@ function Grid(initLut=[], initWidth=0, initHeight=0, initCvsWidth=0, initCvsHeig
 		var position = [x*initCvsWidth/initWidth, y*initCvsHeight/initHeight];
 		return position;
 	}
-	this.isValid = function(x,y){
+	this.lutLookup = function(x,y){
 		if(x >= this.width){
 			return false;
 		}
@@ -211,7 +261,7 @@ function Grid(initLut=[], initWidth=0, initHeight=0, initCvsWidth=0, initCvsHeig
 		var y;
 		for(x=0; x<this.width; x++){
 			for(y=0; y<this.height; y++){
-				if(this.isValid(x,y)){
+				if(this.lutLookup(x,y)){
 					var pos = this.toCanvas(x,y);
 					ctx.fillRect(pos[0],pos[1],1,1);
 				}
@@ -229,7 +279,7 @@ function Visualizer(initGrid ={}){
 			var x = Math.floor(Math.random()*grid.width);
 			var y = Math.floor(Math.random()*grid.height);
 			var traj = Math.floor(Math.random()*7);
-			if(this.grid.isValid(x,y)){
+			if(this.grid.lutLookup(x,y)){
 				var newtrace = new Trace(x, y, traj, grid);
 				this.traces.push(newtrace);
 				return newtrace;
@@ -237,14 +287,18 @@ function Visualizer(initGrid ={}){
 		}
 	}
 	this.generateTraces = function(){
-		for(let i=0; i<800;i++){
-			var newtrace = this.createRandomTrace();
-			this.grid.setPixel(newtrace.x, newtrace.y, 0);
-			newtrace.drawVias();
-		}
-		for(let i=0; i<10; i++){
-			for (var trace of this.traces){
-				trace.doNext();
+		for(let j=100; j<2000; j+=100){
+			for(let i=0; i<j;i++){
+				var newtrace = this.createRandomTrace();
+				if(newtrace != null){
+					this.grid.setPixel(newtrace.x, newtrace.y, 0);
+					newtrace.drawVias();
+				}
+			}
+			for(let i=0; i<10; i++){
+				for (var trace of this.traces){
+					trace.doNext();
+				}
 			}
 		}
 		for (var trace of this.traces){
