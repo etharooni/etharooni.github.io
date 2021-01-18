@@ -155,43 +155,6 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 		if(this.grid.lutLookup(x,y) == false){
 			return false;
 		}
-		//if(trajectory == Traj.NE){
-		//	var coords = this.executeTrajectory(this.x, this.y, Traj.N);
-		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
-		//		return false;
-		//	}
-		//	var coords = this.executeTrajectory(this.x, this.y, Traj.E);
-		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
-		//		return false;
-		//	}
-		//}else if(trajectory == Traj.NW){
-		//	var coords = this.executeTrajectory(this.x, this.y, Traj.N);
-		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
-		//		return false;
-		//	}
-		//	var coords = this.executeTrajectory(this.x, this.y, Traj.W);
-		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
-		//		return false;
-		//	}
-		//}else if(trajectory == Traj.SE){
-		//	var coords = this.executeTrajectory(this.x, this.y, Traj.S);
-		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
-		//		return false;
-		//	}
-		//	var coords = this.executeTrajectory(this.x, this.y, Traj.E);
-		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
-		//		return false;
-		//	}
-		//}else if(trajectory == Traj.SW){
-		//	var coords = this.executeTrajectory(this.x, this.y, Traj.S);
-		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
-		//		return false;
-		//	}
-		//	var coords = this.executeTrajectory(this.x, this.y, Traj.W);
-		//	if(this.grid.lutLookup(coords[0],coords[1]) == false){
-		//		return false;
-		//	}
-		//}
 		return true;
 	}
 	this.drawSegment = function(x1, y1, x2, y2) {
