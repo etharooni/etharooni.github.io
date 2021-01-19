@@ -17,7 +17,8 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 	this.trajectory = initTraj;
 	this.grid = initGrid;
 	this.length = 0;
-	//this.affectedPoints = [];
+	this.animationLevel = 0;
+	this.ended = false;
 
 	this.doTrajectoryIfValid = function(tryTrajectory) {
 		var newcoord = this.executeTrajectory(this.x, this.y, tryTrajectory);
@@ -30,7 +31,6 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 			this.trajectory = tryTrajectory;
 			this.grid.setPixel(newx, newy, 0);
 			this.length += 1;
-			//this.affectedPoints.push([newx, newy]);
 			return 1;
 		}else{
 			return 0;
@@ -78,6 +78,9 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 	}
 
 	this.doNext = function() {
+		if(this.ended){
+			return 0;
+		}
 		if(this.doTrajectoryIfValid(this.trajectory)){
 			return 1; //existing path succeeded
 		}else{
@@ -148,6 +151,7 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 					return 2; //this path succeeded
 				}
 			}
+			this.ended = true;
 			return 0; //end here.  Nothing left to do.
 		}
 	}
@@ -183,15 +187,17 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 	}
 };
 
-function Grid(initLut=[], initWidth=0, initHeight=0, initCvsWidth=0, initCvsHeight=0){
+function Grid(initLut=[], initWidth=0, initHeight=0, x=0, y=0, initCvsWidth=0, initCvsHeight=0){
 	this.lut = initLut;
 	this.width = initWidth;
 	this.height = initHeight;
 	this.cvsWidth = initCvsWidth;
 	this.cvsHeight = initCvsHeight;
+	this.startx = x;
+	this.starty = y;
 	
 	this.toCanvas = function(x,y){
-		var position = [x*initCvsWidth/initWidth, y*initCvsHeight/initHeight];
+		var position = [x*initCvsWidth/initWidth+this.startx, y*initCvsHeight/initHeight+this.starty];
 		return position;
 	}
 	this.lutLookup = function(x,y){
@@ -287,7 +293,7 @@ canvas.style.width='100%';
 canvas.style.height='100%';
 resize();
 	
-var grid = new Grid(ethanrussell, 125, 55, canvas.width,canvas.height);
+var grid = new Grid(ethanrussell, 125, 55, 10,10, canvas.width-20,canvas.height-20);
 var viz = new Visualizer(grid);
 viz.generateTraces();
 //grid.drawGrid();
