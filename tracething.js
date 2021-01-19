@@ -305,7 +305,7 @@ canvas.style.width='100%';
 canvas.style.height='100%';
 resize();
 
-var grid = new Grid(ethanrussell,125,55,50,25,canvas.width-100,canvas.height-100);
+var grid = new Grid(ethanrussell,125,55,50,25,canvas.width-100,canvas.height-30);
 var viz = new Visualizer(grid);
 
 updateAnimation = function(){
