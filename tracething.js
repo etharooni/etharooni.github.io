@@ -312,7 +312,7 @@ updateAnimation = function(){
 	if(viz.numEnded >= viz.traces.length){
 		return;
 	}
-	for(var i=0; i<100; i++){
+	for(var i=0; i<70; i++){
 		viz.updateRandomSegment();
 	}
 	window.requestAnimationFrame(updateAnimation);
