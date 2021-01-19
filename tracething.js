@@ -17,8 +17,10 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 	this.trajectory = initTraj;
 	this.grid = initGrid;
 	this.length = 0;
-	this.animationLevel = 0;
+	this.vertices = [];
 	this.ended = false;
+	this.drawnStartVia = false;
+	this.drawnEndVia = false;
 
 	this.doTrajectoryIfValid = function(tryTrajectory) {
 		var newcoord = this.executeTrajectory(this.x, this.y, tryTrajectory);
@@ -36,7 +38,6 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 			return 0;
 		}
 	}
-	
 	this.executeTrajectory = function(x, y, trajectory){
 		var newx = -1;
 		var newy = -1;
@@ -76,10 +77,16 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 		}
 		return [newx,newy]
 	}
-
 	this.doNext = function() {
 		if(this.ended){
-			return 0;
+			return -1;
+		}
+		if(this.length == 0){
+			if(this.isValid(this.x, this.y) == 0){
+				this.ended = true;
+				return 0;
+			}
+			this.grid.setPixel(this.x, this.y, 0);
 		}
 		if(this.doTrajectoryIfValid(this.trajectory)){
 			return 1; //existing path succeeded
@@ -148,17 +155,19 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 						break;
 				}
 				if(this.doTrajectoryIfValid(nextTrajectory)){
-					return 2; //this path succeeded
+					this.vertices.push([this.x, this.y, this.length]);
+					return 2;
 				}
 			}
 			this.ended = true;
+			this.drawVias();
 			return 0; //end here.  Nothing left to do.
 		}
 	}
 	this.isValid = function(x,y,trajectory){
 		if(this.grid.lutLookup(x,y) == false){
 			return false;
-		}
+		}//could also add 45 degree check, but looks better without
 		return true;
 	}
 	this.drawSegment = function(x1, y1, x2, y2) {
@@ -174,16 +183,24 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 		if(this.length < 1){
 			return;
 		}
-		var cvsxy = this.grid.toCanvas(this.x,this.y);
-		ctx.beginPath();
-		ctx.strokeStyle = '#00DCDC';
-		ctx.arc(cvsxy[0],cvsxy[1], 2, 0, 2 * Math.PI);
-		ctx.stroke();
-		
-		cvsxy = this.grid.toCanvas(this.startx,this.starty);
-		ctx.beginPath();
-		ctx.arc(cvsxy[0],cvsxy[1], 2, 0, 2 * Math.PI);
-		ctx.stroke();	
+		if(!this.drawnStartVia){
+			var cvsxy = this.grid.toCanvas(this.startx,this.starty);
+			ctx.beginPath();
+			ctx.strokeStyle = '#00DCDC';
+			ctx.arc(cvsxy[0],cvsxy[1], 2, 0, 2 * Math.PI);
+			ctx.stroke();
+			this.drawnStartVia = true;
+		}
+		if(!this.drawnEndVia){
+			if(this.ended){
+				var cvsxy = this.grid.toCanvas(this.x,this.y);
+				ctx.beginPath();
+				ctx.strokeStyle = '#00DCDC';
+				ctx.arc(cvsxy[0],cvsxy[1], 2, 0, 2 * Math.PI);
+				ctx.stroke();
+				this.drawnEndVia = true;
+			}
+		}
 	}
 };
 
@@ -219,11 +236,7 @@ function Grid(initLut=[], initWidth=0, initHeight=0, x=0, y=0, initCvsWidth=0, i
 		return true;
 	}
 	this.setPixel = function(x,y,value=0){
-		if(value == 0){
-			this.lut[y][x] = 0;
-		}else{
-			this.lut[y][x] = 1;
-		}
+		this.lut[y][x] = value;
 	}
 	this.drawGrid = function(){
 		var x;
@@ -232,6 +245,7 @@ function Grid(initLut=[], initWidth=0, initHeight=0, x=0, y=0, initCvsWidth=0, i
 			for(y=0; y<this.height; y++){
 				if(this.lutLookup(x,y)){
 					var pos = this.toCanvas(x,y);
+					ctx.fillStyle = '#400000';
 					ctx.fillRect(pos[0],pos[1],1,1);
 				}
 			}
@@ -242,6 +256,7 @@ function Grid(initLut=[], initWidth=0, initHeight=0, x=0, y=0, initCvsWidth=0, i
 function Visualizer(initGrid ={}){
 	this.traces = [];
 	this.grid = initGrid;
+	this.numEnded = 0;
 	
 	this.createRandomTrace = function(){
 		for(let i=0; i<20; i++){ //todo: optimize.  For now, give up if it takes too long
@@ -256,22 +271,19 @@ function Visualizer(initGrid ={}){
 		}
 	}
 	this.generateTraces = function(){
-		for(let j=100; j<2000; j+=100){
-			for(let i=0; i<j;i++){
-				var newtrace = this.createRandomTrace();
-				if(newtrace != null){
-					this.grid.setPixel(newtrace.x, newtrace.y, 0);
-					newtrace.drawVias();
-				}
-			}
-			for(let i=0; i<10; i++){
-				for (var trace of this.traces){
-					trace.doNext();
-				}
-			}
+		for(let i=0; i<1500;i++){
+			var newtrace = this.createRandomTrace();
 		}
-		for (var trace of this.traces){
-			trace.drawVias();
+	}
+	this.updateRandomSegment = function(){
+		var idx = Math.floor(Math.random()*this.traces.length);
+		var endedTrace = this.traces[idx].doNext() == 0;
+		if(endedTrace){
+			if(this.traces[idx].length < 1){
+				this.traces.splice(idx, 1);
+			}else{
+				this.numEnded++;
+			}
 		}
 	}
 }
@@ -293,7 +305,20 @@ canvas.style.width='100%';
 canvas.style.height='100%';
 resize();
 	
-var grid = new Grid(ethanrussell, 125, 55, 10,10, canvas.width-20,canvas.height-20);
+var grid = new Grid(ethanrussell,125,55,50,25,canvas.width-100,canvas.height-100);
 var viz = new Visualizer(grid);
+
+updateAnimation = function(){
+	if(viz.numEnded >= viz.traces.length){
+		return;
+	}
+	for(var i=0; i<100; i++){
+		viz.updateRandomSegment();
+	}
+	window.requestAnimationFrame(updateAnimation);
+}
 viz.generateTraces();
+
+window.requestAnimationFrame(updateAnimation);
+
 //grid.drawGrid();
