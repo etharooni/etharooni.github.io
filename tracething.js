@@ -33,6 +33,7 @@ function Trace(initx=0, inity=0, initTraj=Traj.N, initGrid={}){
 			this.trajectory = tryTrajectory;
 			this.grid.setPixel(newx, newy, 0);
 			this.length += 1;
+			this.drawVias();
 			return 1;
 		}else{
 			return 0;
