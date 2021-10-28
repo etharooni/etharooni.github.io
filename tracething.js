@@ -260,12 +260,12 @@ function Visualizer(initGrid ={}){
 	this.numEnded = 0;
 	
 	this.createRandomTrace = function(){
-		for(let i=0; i<20; i++){ //todo: optimize.  For now, give up if it takes too long
-			var x = Math.floor(Math.random()*grid.width);
-			var y = Math.floor(Math.random()*grid.height);
+		for(let i=0; i<10; i++){ //todo: optimize.  For now, give up if it takes too long
+			var x = Math.floor(Math.random()*this.grid.width);
+			var y = Math.floor(Math.random()*this.grid.height);
 			var traj = Math.floor(Math.random()*7);
 			if(this.grid.lutLookup(x,y)){
-				var newtrace = new Trace(x, y, traj, grid);
+				var newtrace = new Trace(x, y, traj, this.grid);
 				this.traces.push(newtrace);
 				return newtrace;
 			}
@@ -365,8 +365,6 @@ var line1_h = 27;
 var line2 = [letter_full, letter_full, letter_full, letter_full, letter_full, letter_full, letter_full];
 var line2_w = 35;
 var line2_h = 27;
-var vertpatting = 4;
-var horizpadding = 4;
 
 var startx = 0;
 var starty = 20;
@@ -383,21 +381,33 @@ var vizualizers = [];
 for(var current_x=0; current_x<line1.length; current_x++){
 	var cvsletterwidth = ((canvas.width-100)/line1.length);
 	var cvsletterheight=((canvas.height-30)/2);
-	var currentgrid = new Grid(line1[current_x], line1_w, line1_h, startx+current_x*(cvsletterwidth+horizpadding), starty+vertpatting, cvsletterwidth, cvsletterheight);
+	var currentgrid = new Grid(line1[current_x], line1_w, line1_h, startx+current_x*cvsletterwidth, starty, cvsletterwidth, cvsletterheight);
+	var currentviz = new Visualizer(currentgrid);
 	grids.push(currentgrid);
-	vizualizers.push(new Visualizer(currentgrid));
-	currentgrid.drawGrid();
+	vizualizers.push(currentviz);
+	currentviz.generateTraces();
+	//currentgrid.drawGrid();
 }
 for(var current_x=0; current_x<line2.length; current_x++){
 	var cvsletterwidth = ((canvas.width-100)/line2.length);
 	var cvsletterheight=((canvas.height-30)/2);
-	var currentgrid = new Grid(line2[current_x], line2_w, line2_h, startx+current_x*(cvsletterwidth+horizpadding), starty+cvsletterheight+(2*vertpatting), cvsletterwidth, cvsletterheight);
+	var currentgrid = new Grid(line2[current_x], line2_w, line2_h, startx+current_x*cvsletterwidth, starty+cvsletterheight, cvsletterwidth, cvsletterheight);
+	var currentviz = new Visualizer(currentgrid);
 	grids.push(currentgrid);
-	vizualizers.push(new Visualizer(currentgrid));
-	currentgrid.drawGrid();
+	vizualizers.push(currentviz);
+	currentviz.generateTraces();
+	//currentgrid.drawGrid();
 }
 
 updateAnimation = function(){
+	for(var i=0; i<80; i++){
+		var viz = vizualizers[i%vizualizers.length];
+		if(viz.numEnded >= viz.traces.length){
+			continue;
+		}
+		viz.updateRandomSegment();
+	}
+	window.requestAnimationFrame(updateAnimation);
 	//if(viz.numEnded >= viz.traces.length){
 	//	return;
 	//}
@@ -408,6 +418,4 @@ updateAnimation = function(){
 }
 
 //viz.generateTraces();
-//window.requestAnimationFrame(updateAnimation);
-
-//grid.drawGrid();
+window.requestAnimationFrame(updateAnimation);
