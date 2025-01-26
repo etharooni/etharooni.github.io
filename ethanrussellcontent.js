@@ -18,14 +18,4 @@ for (i = 0; i < autoOpen.length; i++) {
 	var content = autoOpen[i].nextElementSibling;
 	content.style.display = "block";
 	autoOpen[i].classList.add("active");
-	
-	autoOpen[i].addEventListener("click", function() {
-		this.classList.toggle("active");
-		var content = this.nextElementSibling;
-		if (content.style.display === "block") {
-			content.style.display = "none";
-		} else {
-			content.style.display = "block";
-		}
-	});
 }
