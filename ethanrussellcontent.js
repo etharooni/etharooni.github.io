@@ -1,4 +1,5 @@
 var coll = document.getElementsByClassName("collapsible");
+var autoOpen = document.getElementsByClassName("collapsible_auto");
 var i;
 
 for (i = 0; i < coll.length; i++) {
@@ -11,4 +12,10 @@ for (i = 0; i < coll.length; i++) {
 			content.style.display = "block";
 		}
 	});
+}
+
+for (i = 0; i < autoOpen.length; i++) {
+	var content = autoOpen[i].nextElementSibling;
+	content.style.display = "block";
+	autoOpen[i].classList.add("active");
 }
