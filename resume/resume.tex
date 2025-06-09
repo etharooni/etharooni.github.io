@@ -1,4 +1,5 @@
-\documentclass[letterpaper]{deedy-resume} % Use US Letter paper, change to a4paper for A4 
+%use LuaLaTeX in TeXworks
+\documentclass[letterpaper]{deedy-resume} % Use US Letter paper, change to a4paper for A4.  
 \usepackage{graphicx}
 
 \begin{document}
@@ -18,12 +19,14 @@
 \includegraphics[scale=0.2]{profile.png}
 \end{center}
 
-\section{Summary}
-\descript{Creative, self-motivated, and passionate engineer driven to solve problems and create novel new ideas.}
+\runsubsection{Summary}
+\sectionspace
+\descriptlower{\\Creative, self-motivated, and passionate engineer driven to solve problems and create novel new ideas.}
 
 \sectionspace % Some whitespace after the section
 
-\section{Education} 
+\runsubsection{Education} 
+\sectionspace
 
 \descript{University of Puget Sound}
 
@@ -32,7 +35,7 @@ Graduated May 2017 | Tacoma, WA
 
 \sectionspace % Some whitespace after the section
 
-\section{Skills}
+\runsubsection{Skills}
 \sectionspace % Some whitespace after the section
 
 \begin{tightitemize}
@@ -47,6 +50,9 @@ STM32 Ecosystem: Cube, TouchGFX
 PCB design and layout (Altium Designer)
 
 \item
+CAD design and manufacturing (Autodesk Inventor)
+
+\item
 Power Electronics Design and Controls
 
 \item
@@ -54,11 +60,9 @@ Electromechanical System Design
 
 \end{tightitemize}
 
-\sectionspace % Some whitespace after the section
-
-\section{About} 
-\sectionspace % Some whitespace after the section
-My work specializes in embedded systems, but I enjoy the breadth of skills involved with creating something from scratch: CNC machining, computer graphics, metal fabrication.  See my website for a portfolio of personal projects.
+\runsubsection{About} 
+\sectionspace
+\descriptlower{\\My work specializes in embedded systems, but I enjoy the breadth of skills involved with creating something from scratch: CNC machining, computer graphics, metal fabrication.  See my website for a portfolio of personal projects.}
 \end{minipage} % The end of the left column
 \hfill
 %
@@ -74,25 +78,25 @@ My work specializes in embedded systems, but I enjoy the breadth of skills invol
 
 \sectionspace % Some whitespace after the section
 
-\section{Work Experience}
+%\section{Work Experience}
 
 \runsubsection{Chapman Leonard}
 \descript{| Firmware/EE/Systems Consultant}
 \location{Dec. 2023 - Present | North Hollywood, CA}
-\vspace{\topsep} % Hacky fix for awkward extra vertical space
 \begin{tightitemize}
-\item 
-Hired as a consultant to spearhead upgrading traditional video production studio equipment to software control.
+%\item 
+%Hired as a consultant to spearhead upgrading traditional video production studio equipment to software control.
 
 \item
-Responsible for systems design, power-electronics design, high reliability real-time firmware, UI firmware, and systems integration for version 2 of an 8000 pound hydraulic/electric studio crane base to run IMU-based hydraulic post-stabilization, servo drive for repeated movements, and wireless console for user control.
+Responsible for systems design, power-electronics design, high reliability real-time firmware, UI firmware, and systems integration for an 8000 pound hydraulic/electric studio video-production crane base to run IMU-based hydraulic post-stabilization, servo drive for repeated movements, and wireless console for user control.
 
 \item 
-Designed circuit boards, created firmware/bootloader suite, and produced a small production run of a camera-head "Mini-Console" with touch screen interface created using ST TouchGFX.  Created a series of user-interface devices and associated electronics and firmware to interface with the Mini-Console.
+Designed PCBAs, created firmware/bootloader suite, and produced a small production run of a camera-head "Mini-Console" with touch screen interface created using ST TouchGFX.  Created a series of user-interface devices and associated electronics and firmware to interface with the Mini-Console.
 
 \item Coordinated a small team of mechanical engineers for electro-mechanical upgrades to existing bases.
 
 \end{tightitemize}
+\vspace{\topsep} % Hacky fix for awkward extra vertical space
 
 \runsubsection{Freefly Systems}
 \descript{| Robotics Engineer}
@@ -110,6 +114,7 @@ Involved in system design, electrical design and software development of medium-
 - \textit{Alta X}:  Motor telemetry module: in rapid response to a crash and recall, reverse-engineered a protocol for proprietary off-the-shelf motor drives and developed an electrical and software package for communicating with the aircraft.
 
 \end{tightitemize}
+\vspace{\topsep} % Hacky fix for awkward extra vertical space
 
 \runsubsection{University of Puget Sound}
 \descript{| Science Support Engineer}
@@ -125,7 +130,7 @@ Involved in system design, electrical design and software development of medium-
 - \textit{CNC Plasma Cutter:} built a CNC plasma cutter for use in the machine shop
 \end{tightitemize}
 
-
+\vspace{\topsep} % Hacky fix for awkward extra vertical space
 
 \runsubsection{Digiwest, LLC}
 \descript{| Engineer/Technician}
@@ -135,6 +140,7 @@ Involved in system design, electrical design and software development of medium-
 
 \item Designed and prototyped a version of the BlueMAC product for use in NEMA TS2 cabinets
 \end{tightitemize}
+\vspace{\topsep} % Hacky fix for awkward extra vertical space
 
 \runsubsection{Misc.}
 \location{Before 2013}
