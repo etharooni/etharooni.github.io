@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.6.9)  14 JUN 2025 10:24
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.6.9)  14 JUN 2025 10:47
  restricted system commands enabled.
 **resume.tex
 (./resume.tex
@@ -738,15 +738,15 @@ Here is how much of LuaTeX's memory you used:
  447 words of node memory still in use:
    3 hlist, 1 vlist, 1 rule, 2 glue, 3 kern, 1 glyph, 6 attribute, 55 glue_spec,
  5 attribute_list, 1 write nodes
-   avail lists: 2:1552,3:458,4:778,5:695,6:143,7:14112,8:2,9:647,10:15,11:1097
+   avail lists: 2:1505,3:449,4:760,5:686,6:134,7:14187,8:2,9:632,10:15,11:1103
  35677 multiletter control sequences out of 65536+600000
- 67 fonts using 5293831 bytes
- 94i,7n,129p,358b,408s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 67 fonts using 5291911 bytes
+ 94i,7n,129p,354b,408s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/users/ethar/appdata/local/microsoft/windows/fonts/lato-lightitalic.ttf><c:/u
 sers/ethar/appdata/local/microsoft/windows/fonts/lato-bold.ttf><C:/Users/ethar/A
 ppData/Local/Programs/MiKTeX/fonts/opentype/impallari/raleway/raleway-medium.otf
 ><c:/users/ethar/appdata/local/microsoft/windows/fonts/lato-light.ttf>
-Output written on resume.pdf (1 page, 1018757 bytes).
+Output written on resume.pdf (1 page, 1019148 bytes).
 
 PDF statistics: 49 PDF objects out of 1000 (max. 8388607)
  3 named destinations out of 1000 (max. 131072)
